@@ -1,77 +1,160 @@
-const cards = [
-  "🍎",
-  "🍎",
-  "🍌",
-  "🍌",
-  "🍇",
-  "🍇",
-  "🍓",
-  "🍓",
-  "🍒",
-  "🍒",
-  "🍍",
-  "🍍",
-  "🍉",
-  "🍉",
-  "🥭",
-  "🥭",
-];
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const img = new Image();
+img.src = "./flappy-bird-set.png";
 
-cards.sort(() => 0.5 - Math.random());
+// General settings
+let gamePlaying = false;
+const gravity = 0.5;
+const speed = 6.2;
+const size = [51, 36];
+const jump = -11.5;
+const cTenth = canvas.width / 10;
 
-const gameBoard = document.getElementById("game-board");
-let firstCard, secondCard;
-let lockBoard = false;
+// Pipes settings
+const pipeWidth = 78;
+const pipeGap = 270;
+const pipeLoc = () =>
+  Math.random() * (canvas.height - (pipeGap + pipeWidth) - pipeWidth) +
+  pipeWidth;
 
-cards.forEach((card) => {
-  const cardElement = document.createElement("div");
-  cardElement.classList.add("card");
-  cardElement.dataset.card = card;
-  cardElement.addEventListener("click", flipCard);
-  gameBoard.appendChild(cardElement);
-});
+let index = 0,
+  bestScore = 0,
+  currentScore = 0,
+  pipes = [],
+  flight,
+  flyHeight;
 
-function flipCard() {
-  if (lockBoard) return;
-  if (this === firstCard) return;
-  this.classList.add("flipped");
-  this.textContent = this.dataset.card;
-  if (!firstCard) {
-    firstCard = this;
-    return;
+const setup = () => {
+  currentScore = 0;
+  flight = jump;
+  flyHeight = canvas.height / 2 - size[1] / 2;
+
+  pipes = Array(3)
+    .fill()
+    .map((a, i) => [canvas.width + i * (pipeGap + pipeWidth), pipeLoc()]);
+};
+
+const render = () => {
+  index++;
+  // Background
+  ctx.drawImage(
+    img,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    -((index * (speed / 2)) % canvas.width) + canvas.width,
+    0,
+    canvas.width,
+    canvas.height
+  );
+  ctx.drawImage(
+    img,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    -((index * (speed / 2)) % canvas.width) + 0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  // Bird
+  if (gamePlaying) {
+    ctx.drawImage(
+      img,
+      432,
+      Math.floor((index % 9) / 3) * size[1],
+      ...size,
+      cTenth,
+      flyHeight,
+      ...size
+    );
+    flight += gravity;
+    flyHeight = Math.min(flyHeight + flight, canvas.height - size[1]);
+  } else {
+    ctx.drawImage(
+      img,
+      432,
+      Math.floor((index % 9) / 3) * size[1],
+      ...size,
+      canvas.width / 2 - size[0] / 2,
+      flyHeight,
+      ...size
+    );
+    flyHeight = canvas.height / 2 - size[1] / 2;
+
+    ctx.fillText(`Meilleur score : ${bestScore}`, 55, 245);
+    ctx.fillText("Cliquez pour jouer", 48, 535);
+    ctx.font = "bold 30px courier";
+  }
+  // pipes display
+  if (gamePlaying) {
+    pipes.map((pipe) => {
+      pipe[0] -= speed;
+
+      //Top pipe
+      ctx.drawImage(
+        img,
+        432,
+        588 - pipe[1],
+        pipeWidth,
+        pipe[1],
+        pipe[0],
+        0,
+        pipeWidth,
+        pipe[1]
+      );
+
+      //Bottom pipe
+      ctx.drawImage(
+        img,
+        432 + pipeWidth,
+        108,
+        pipeWidth,
+        canvas.height - pipe[1] + pipeGap,
+        pipe[0],
+        pipe[1] + pipeGap,
+        pipeWidth,
+        canvas.height - pipe[1] + pipeGap
+      );
+
+      if (pipe[0] <= -pipeWidth) {
+        currentScore++;
+        bestScore = Math.max(bestScore, currentScore);
+
+        //Remove and news pipes
+        pipes = [
+          ...pipes.slice(1),
+          [pipes[pipes.length - 1][0] + pipeGap + pipeWidth, pipeLoc()],
+        ];
+      }
+
+
+      // colision
+      if (
+        [
+          pipe[0] <= cTenth + size[0],
+          pipe[0] + pipeWidth >= cTenth,
+          pipe[1] > flyHeight || pipe[1] + pipeGap < flyHeight + size[1],
+        ].every((elem) => elem)
+      ) {
+        gamePlaying = false;
+        setup();
+      }
+    });
   }
 
-  secondCard = this;
-  checkForMatch();
-}
+  document.getElementById("bestScore").innerHTML = `Meilleur : ${bestScore}`;
+  document.getElementById(
+    "currentScore"
+  ).innerHTML = `Actuel : ${currentScore}`;
+  window.requestAnimationFrame(render);
+};
 
-function checkForMatch() {
-  let isMatch = firstCard.dataset.card === secondCard.dataset.card;
-
-  isMatch ? disableCards() : unflipCards();
-}
-
-function disableCards() {
-  firstCard.removeEventListener("click", flipCard);
-  secondCard.removeEventListener("click", flipCard);
-
-  resetBoard();
-}
-
-function unflipCards() {
-  lockBoard = true;
-
-  setTimeout(() => {
-    firstCard.classList.remove("flipped");
-    secondCard.classList.remove("flipped");
-
-    firstCard.textContent = "";
-    secondCard.textContent = "";
-
-    resetBoard();
-  }, 1000);
-}
-
-function resetBoard() {
-  [firstCard, secondCard, lockBoard] = [null, null, false];
-}
+setup();
+img.onload = render;
+document.addEventListener("click", () => (gamePlaying = true));
+window.onclick = () => (flight = jump);
