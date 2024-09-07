@@ -1,25 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floppy Bird</title>
+    <title>ChessJS</title>
+    <link rel="shortcut icon" href="./assets/img/logoEJS.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
-    <header>
-        <h1>Floppy Bird</h1>
-        <div class="score-container">
-            <div id="bestScore"></div>
-            <div id="currentScore"></div>
-        </div>
-    </header>
+    <div class="title"><h1>ChessJS</h1></div>
+    <div id="chessboard">
+        <div class="box cb"><i class="fa-solid fa-chess-rook"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-knight"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-bishop"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-queen"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-king"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-bishop"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-knight"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-rook"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-solid fa-chess-pawn"></i></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cn"></div>
+        <div class="box cb"></div>
+        <div class="box cb"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-pawn"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-rook"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-knight"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-bishop"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-queen"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-king"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-bishop"></i></div>
+        <div class="box cn"><i class="fa-regular fa-chess-knight"></i></div>
+        <div class="box cb"><i class="fa-regular fa-chess-rook"></i></div>
+    </div>
 
-    <canvas id="canvas" width="431" height="768"></canvas>
-    
+
+
     <script src="./index.js"></script>
 </body>
-
 </html>
