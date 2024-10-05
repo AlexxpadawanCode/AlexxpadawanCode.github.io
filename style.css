@@ -1,24 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 body {
-    margin: 0;
-    text-align: center;
-    font-family: 'Press Start 2P', cursive;
-    user-select: none;
-}
-header {
-    margin: 0 auto;
-    width: 431px;
-}
-h1 {
-    background: url(./flappy-bird-set.png) 0% 340px;
-    padding: 1.2rem 0;
-    margin: 0;
-}
-.score-container {
     display: flex;
-    justify-content: space-between;
-    padding: 8px 6px;
-    background: #5ee270;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
+.chessBoard {
+    width: 80vw;
+    height: 80vw;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box {
+    width: 12.5%;
+    height: 12.5%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.w {
+    background: #f0d9b5;
+}
+
+.b {
+    background: #b58863;
+}
+
+.location {
+    height: auto;
+    display: flex;
+    bottom: 4%;
+    right: 4%;
+    position: absolute;
+    font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.rank {
+    left: 4%;
+    top: 4%;
+}
+
+.wTxt {
+    color: #f0d9b5;
+}
+
+.bTxt {
+    color: #b58863
+}
+
+.piece {
+    width: 100%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.piece img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+@media (min-width:600px) {
+    .chessBoard {
+        width: 600px;
+        height: 600px;
+    }
+}
+
+@media (min-width:600px) {
+    .location {
+        font-size: 8px;
+    }
+}
